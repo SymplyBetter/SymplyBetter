@@ -1,56 +1,134 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>SymplyBetter</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat|Sacramento" rel="stylesheet">
-  <link rel="icon" href="favicon.ico">
+  <meta charset="UTF-8">
+  <title>Danny's drum kit</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="top-container">
-    <img class="top-cloud" src="images/cloud.png" alt="cloud">
-    <div class="title-text">
-      <h1>I'm SymplyBetter.</h1>
-      <h2>Get<span class="pro"></span>better.</h2>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
     </div>
-    <img class="bottom-cloud" src="images/cloud.png" alt="cloud">
-    <img class="mountain" src="images/mountain.png" alt="mountain-img">
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>4
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
   </div>
 
-  <div class="middle-container">
-    <div class="profile">
-      <h2>Hello.</h2>
-      <p class="intro">I am better and built different than you.</p>
+
+
+  <div class="keys2">
+      <div data-key="90" class="key">
+      <kbd>Z</kbd>
+      <span class="sound">clap</span>
     </div>
-    <hr>
-    <div class="skills">
-      <h2>My Skills.</h2>
-      <div class="skill-row">
-
-        <h3>Gaming</h3>
-        <p>One of my many skills is gaming, I like games and are decent on most games.</p>
-
-      </div>
-
-
-        <h3>Being good</h3>
-        <p>But my best skill is actually being good.</p>
-
-      </div>
+    <div data-key="88" class="key">
+      <kbd>X</kbd>
+      <span class="sound">hihat</span>
     </div>
-    <hr>
-    <div class="contact-me">
-      <h2>Get In Touch</h2>
-      <p class="contact-message">Wanna know how to get good? Just get better and add me on discord and get better without me telling you how to get good so get good yourself before asking me how to get good.</p>
-      <a class="btn" href="Discord:SymplyBetter#7985">SymplyBetter#7985</a>
+    <div data-key="67" class="key">
+      <kbd>C</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="86" class="key">
+      <kbd>V</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="66" class="key">
+      <kbd>B</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="78" class="key">
+      <kbd>N</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="77" class="key">
+      <kbd>M</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="188" class="key">
+      <kbd>,</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="190" class="key">
+      <kbd>.</kbd>
+      <span class="sound">tink</span>
     </div>
   </div>
 
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+  <audio data-key="90" src="sounds/clap.wav"></audio>
+  <audio data-key="88" src="sounds/hihat.wav"></audio>
+  <audio data-key="67" src="sounds/kick.wav"></audio>
+  <audio data-key="86" src="sounds/openhat.wav"></audio>
+  <audio data-key="66" src="sounds/boom.wav"></audio>
+  <audio data-key="78" src="sounds/ride.wav"></audio>
+  <audio data-key="77" src="sounds/snare.wav"></audio>
+  <audio data-key="188" src="sounds/tom.wav"></audio>
+  <audio data-key="190" src="sounds/tink.wav"></audio>
+
+<script>
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!audio) return;
+
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+  }
+
+  const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
+</script>
 
 
 </body>
-
 </html>
